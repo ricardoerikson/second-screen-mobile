@@ -3,7 +3,6 @@ package br.ufmg.ppgee.secscrmob;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import br.ufmg.ppgee.secscrmob.service.login.LoginAsyncTask;
 
 public class MainActivity extends Activity {
 
@@ -68,11 +68,10 @@ public class MainActivity extends Activity {
 	    mSubmitLoginButton.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-		    Log.i("login", "Username:"
-			    + mUsernamField.getText().toString());
-		    Log.i("login", "Passord:"
-			    + mPasswordField.getText().toString());
-
+		    LoginAsyncTask loginAsyncTask = new LoginAsyncTask();
+		    String username = mUsernamField.getText().toString();
+		    String password = mPasswordField.getText().toString();
+		    loginAsyncTask.execute(username, password);
 		}
 	    });
 
