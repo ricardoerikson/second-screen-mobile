@@ -20,32 +20,41 @@ import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
-public class HttpHelper {
+public class WebServiceManager {
 
-    private static final HttpClient sHttpClient = new DefaultHttpClient();
+    private final HttpClient mHttpClient;
 
-    public static String doPost(String uri, Map<String, String> attributes)
+    private static WebServiceManager mInstance;
+
+    private WebServiceManager() {
+	mHttpClient = new DefaultHttpClient();
+    }
+
+    public static WebServiceManager getInstance() {
+	if (mInstance == null)
+	    mInstance = new WebServiceManager();
+	return mInstance;
+    }
+
+    public String doPost(String uri, Map<String, String> attributes)
 	    throws ClientProtocolException, IOException {
 	HttpPost httpPost = new HttpPost(uri);
 	Log.i("login", uri);
-	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(
-		attributes.size());
+	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(attributes.size());
 	for (Map.Entry<String, String> pair : attributes.entrySet()) {
-	    nameValuePairs.add(new BasicNameValuePair(pair.getKey(), pair
-		    .getValue()));
+	    nameValuePairs.add(new BasicNameValuePair(pair.getKey(), pair.getValue()));
 	}
 	httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-	HttpResponse response = sHttpClient.execute(httpPost);
+	HttpResponse response = mHttpClient.execute(httpPost);
 	return EntityUtils.toString(response.getEntity());
     }
 
-    public static String doGet(String uri) throws URISyntaxException,
-	    ClientProtocolException, IOException {
+    public String doGet(String uri) throws URISyntaxException, ClientProtocolException, IOException {
 	HttpGet httpGet = new HttpGet(uri);
 	URI website = new URI(uri);
 	httpGet.setURI(website);
 
-	HttpResponse response = sHttpClient.execute(httpGet);
+	HttpResponse response = mHttpClient.execute(httpGet);
 	return EntityUtils.toString(response.getEntity());
     }
 

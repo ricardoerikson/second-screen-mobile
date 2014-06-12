@@ -21,8 +21,8 @@ public class MainActivity extends Activity {
 	setContentView(R.layout.activity_main);
 
 	if (savedInstanceState == null) {
-	    getFragmentManager().beginTransaction()
-		    .add(R.id.container, new PlaceholderFragment()).commit();
+	    getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment())
+		    .commit();
 	}
     }
 
@@ -57,14 +57,10 @@ public class MainActivity extends Activity {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
-	    View rootView = inflater.inflate(R.layout.fragment_main, container,
-		    false);
-	    mUsernamField = (EditText) rootView
-		    .findViewById(R.id.username_field);
-	    mPasswordField = (EditText) rootView
-		    .findViewById(R.id.password_field);
-	    mSubmitLoginButton = (Button) rootView
-		    .findViewById(R.id.submit_login_button);
+	    View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+	    mUsernamField = (EditText) rootView.findViewById(R.id.username_field);
+	    mPasswordField = (EditText) rootView.findViewById(R.id.password_field);
+	    mSubmitLoginButton = (Button) rootView.findViewById(R.id.submit_login_button);
 	    mSubmitLoginButton.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
