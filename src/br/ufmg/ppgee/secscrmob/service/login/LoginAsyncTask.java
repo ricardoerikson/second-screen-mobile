@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.http.client.ClientProtocolException;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import br.ufmg.ppgee.secscrmob.enums.EServiceUris;
 import br.ufmg.ppgee.secscrmob.utils.WebServiceManager;
 
@@ -35,6 +36,7 @@ public class LoginAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 	String uri = EServiceUris.BASE_URI.value().concat(EServiceUris.VIEWERS_JSON.value());
+	Log.i("login", uri);
 	new GetViewersAsyncTask().execute(uri);
     }
 
