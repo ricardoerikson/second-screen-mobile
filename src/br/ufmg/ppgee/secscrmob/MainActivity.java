@@ -1,5 +1,8 @@
 package br.ufmg.ppgee.secscrmob;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,7 +14,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import br.ufmg.ppgee.secscrmob.service.login.LoginAsyncTask;
+import br.ufmg.ppgee.secscrmob.listener.InteractionListenerInstaller;
+import br.ufmg.ppgee.secscrmob.listener.InteractionsController;
 
 public class MainActivity extends Activity {
 
@@ -19,10 +23,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
+	InteractionListenerInstaller
+		.processAnnotation(InteractionsController.class);
 
 	if (savedInstanceState == null) {
-	    getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment())
-		    .commit();
+	    getFragmentManager().beginTransaction()
+		    .add(R.id.container, new PlaceholderFragment()).commit();
 	}
     }
 
@@ -57,17 +63,25 @@ public class MainActivity extends Activity {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
-	    View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-	    mUsernamField = (EditText) rootView.findViewById(R.id.username_field);
-	    mPasswordField = (EditText) rootView.findViewById(R.id.password_field);
-	    mSubmitLoginButton = (Button) rootView.findViewById(R.id.submit_login_button);
+	    View rootView = inflater.inflate(R.layout.fragment_main, container,
+		    false);
+	    mUsernamField = (EditText) rootView
+		    .findViewById(R.id.username_field);
+	    mPasswordField = (EditText) rootView
+		    .findViewById(R.id.password_field);
+	    mSubmitLoginButton = (Button) rootView
+		    .findViewById(R.id.submit_login_button);
 	    mSubmitLoginButton.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-		    LoginAsyncTask loginAsyncTask = new LoginAsyncTask();
-		    String username = mUsernamField.getText().toString();
-		    String password = mPasswordField.getText().toString();
-		    loginAsyncTask.execute(username, password);
+		    Map<String, Object> payload = new HashMap<String, Object>();
+		    payload.put("name", "Ricardo");
+		    InteractionsController.sendInteraction(
+			    "captureuserevaluation", payload);
+		    // LoginAsyncTask loginAsyncTask = new LoginAsyncTask();
+		    // String username = mUsernamField.getText().toString();
+		    // String password = mPasswordField.getText().toString();
+		    // loginAsyncTask.execute(username, password);
 		}
 	    });
 
