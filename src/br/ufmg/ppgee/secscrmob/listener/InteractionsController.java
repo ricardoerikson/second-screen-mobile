@@ -13,7 +13,7 @@ public class InteractionsController {
 
     private static Map<String, InteractionListenerModel> ilm = new HashMap<String, InteractionListenerModel>();
 
-    @InteractionListener(uri = "/users/evaluation", method = RequestMethod.POST)
+    @InteractionMapping(uri = "/users/evaluation", method = RequestMethod.POST)
     public static void captureUserEvaluation(Map<String, Object> payload,
 	    InteractionListenerModel model) {
 	Log.i("interaction", "Caller: " + model.getCaller());

@@ -11,7 +11,7 @@ public class InteractionListenerInstaller {
     public static void processAnnotation(Class<?> klass) {
 	Class<?> cl = klass;
 	for (Method m : cl.getDeclaredMethods()) {
-	    InteractionListener a = m.getAnnotation(InteractionListener.class);
+	    InteractionMapping a = m.getAnnotation(InteractionMapping.class);
 	    if (a != null)
 		InteractionsController.addAction(m.getName(),
 			a.uri(), a.method());
