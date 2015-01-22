@@ -14,8 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import br.ufmg.ppgee.secscrmob.listener.InteractionListenerInstaller;
-import br.ufmg.ppgee.secscrmob.listener.InteractionsController;
+import br.ufmg.ppgee.secscrmob.listener.InteractionListener;
 
 public class MainActivity extends Activity {
 
@@ -23,9 +22,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
-	InteractionListenerInstaller
-		.processAnnotation(InteractionsController.class);
-
 	if (savedInstanceState == null) {
 	    getFragmentManager().beginTransaction()
 		    .add(R.id.container, new PlaceholderFragment()).commit();
@@ -74,10 +70,11 @@ public class MainActivity extends Activity {
 	    mSubmitLoginButton.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+		    
 		    Map<String, Object> payload = new HashMap<String, Object>();
 		    payload.put("name", "Ricardo");
-		    InteractionsController.sendInteraction(
-			    "captureuserevaluation", payload);
+		    InteractionListener.getProxy().captureUserEvaluation(payload);
+		    
 		    // LoginAsyncTask loginAsyncTask = new LoginAsyncTask();
 		    // String username = mUsernamField.getText().toString();
 		    // String password = mPasswordField.getText().toString();
